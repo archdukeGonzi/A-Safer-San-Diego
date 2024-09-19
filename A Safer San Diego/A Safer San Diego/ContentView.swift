@@ -1,24 +1,32 @@
-//
-//  ContentView.swift
-//  A Safer San Diego
-//
-//  Created by Gonzalo Jr Nunez on 9/11/24.
-//
+import SwiftUI // Import SwiftUI for View and StateObject
+import CoreLocation
 
-import SwiftUI
 
 struct ContentView: View {
+    @StateObject var locationManager = LocationManager()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            if let location = locationManager.location {
+                
+                Text("Latitude: \(location.coordinate.latitude)")
+                Text("Longitude: \(location.coordinate.longitude)")
+                
+            } else if locationManager.locationDenied {
+                Text("Location access is denied. Please enable it in Settings. Alternatively, close application.")
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            } else {
+                Text("Requesting location...")
+            }
         }
         .padding()
+        .onAppear {
+            locationManager.checkingAuth()
+        }
     }
 }
 
-#Preview {
-    ContentView()
-}
