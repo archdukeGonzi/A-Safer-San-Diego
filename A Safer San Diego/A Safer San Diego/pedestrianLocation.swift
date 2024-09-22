@@ -38,7 +38,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
     
      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 self.location = location
             }
         }
@@ -50,6 +50,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
         checkingAuth() // Recheck permissions when they change
     }
     
+    
+    // Fialed to update location
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to update location: \(error)")
     }
