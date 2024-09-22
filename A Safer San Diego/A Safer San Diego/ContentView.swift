@@ -13,7 +13,7 @@ struct ContentView: View {
                 Text("Longitude: \(location.coordinate.longitude)")
                 
             } else if locationManager.locationDenied {
-                Text("Location access is denied. Please enable it in Settings. Alternatively, close application.")
+                Text("Location access is denied. Please enable it in Settings.")
                 Button("Open Settings") {
                     if let url = URL(string: UIApplication.openSettingsURLString) {
                         UIApplication.shared.open(url)
